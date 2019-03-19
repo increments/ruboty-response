@@ -12,6 +12,8 @@ module Ruboty
       on /list responses\z/, name: 'list', description: 'Show registered responses'
 
       def catchall(message)
+        return if message.from_name == robot.name
+
         responses.each do |id, hash|
           next unless message[:keyword] =~ /#{hash[:regex]}/ rescue false
 
