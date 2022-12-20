@@ -14,11 +14,15 @@ module Ruboty
       def catchall(message)
         return if message.from_name == robot.name
 
+        matched = false
         responses.each do |id, hash|
           next unless message[:keyword] =~ /#{hash[:regex]}/ rescue false
 
+          matched = true
           message.reply(hash[:response])
         end
+
+        matched
       rescue => e
         Ruboty.logger.error("Error: #{e.class}: #{e.message}}")
       end
